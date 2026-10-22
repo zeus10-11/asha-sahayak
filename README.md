@@ -38,6 +38,14 @@ The app can also be served from any HTTPS static host using `dist/` as the publi
 
 Hindi support covers navigation, recording locale, read-back, and a limited extraction vocabulary. Detailed workflow copy and clinical explanations currently remain English. Malayalam and complete localisation are not implemented.
 
+## Care journey features
+
+- **Plan my day:** pending tasks due today or earlier, plus tasks for people with open urgent flags. Suggested order is urgent, overdue, then due today, grouped by ward within each tier. Workers can reorder tasks, while urgent tasks stay first. The order is saved for the current day. This is not medical triage or route optimisation.
+- **Family timeline:** view visits, planned/completed follow-ups, and referral events for household members together. When registering a beneficiary, choose an existing household or create a new one.
+- **Referral tracking:** draft → contacted → acknowledged → assessment completed. Every transition requires a worker confirmation and note. No clinic integration verifies these events; copying text never advances a stage, and referral completion never automatically resolves a flag.
+- **Guided practice:** choose “Take the three-minute tour” on the dashboard. A separate fictional workspace runs in memory, with a sample family and referral. Restarting or exiting leaves saved records unchanged. Practice records are not backed up or exported, and a reload returns to the saved workspace.
+- **Offline demonstration guide:** available from the dashboard and Settings. Test actual offline persistence outside guided practice, using fictional records. The guide reports device connectivity and whether a service worker controls the page; it does not claim successful caching or backup based on connectivity alone.
+
 ## Try the main flow
 
 1. Choose **Record a visit** from Overview.
@@ -91,7 +99,7 @@ No ASHA headcount, population impact estimate, clinical accuracy, field-pilot re
 With Node.js 18+ installed:
 
 ```bash
-node --test tests/engine.test.js
+npm test
 npm run check
 ```
 
@@ -109,6 +117,8 @@ GitHub Actions runs the JavaScript tests, syntax checks, and Python tests on eve
 dist/                 Browser application (tracked source; no build step)
   app.js              Views and workflow coordination
   engine.js           Extraction, screening, planning, and referral rules
+  care.js             Day planning, referral transitions, household timelines
+  dashboard.css       Dashboard and care-workflow styling
   store.js            IndexedDB persistence and synthetic sample data
   sw.js               Service-worker cache
   index.html          Application entry point
